@@ -77,24 +77,17 @@ def comparision(): # resolve between comparator of curr value and safe value poi
     else:
         print("Looking for elevation point : " + str(usdt_price))
 
-
-
-def debug():
-    USDTINR()
-    comparision()
-
-debug()
-
     
 # Actual Running time:
-# while True:
-#     try:
-#         time.sleep(1)
-#         USDTINR()
-#         comparision()
-#     except Exception as e:
-#         driver.quit()
-#         break
+while True:
+    try:
+        time.sleep(1)
+        USDTINR()
+        comparision()
+        print()
+    except Exception as e:
+        driver.quit()
+        break
 
 # Debug Running time with errors:
 # while True:
