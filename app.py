@@ -27,7 +27,7 @@ driver.maximize_window()
 # driver.minimize_window()
 
 driver.get(url) # launches the broswer and open url
-time.sleep(12) # very important everything to load before exicuting commands // safe at 5
+time.sleep(5) # very important everything to load before exicuting commands // safe at 5
 
 def login():
     driver.find_element(By.XPATH, "//span[normalize-space()='Login']").click()
@@ -44,8 +44,8 @@ global curr_usdt_price
 global safe_low_point
 global safe_high_point
 
-safe_low_point = 00.00
-safe_high_point = 100.00
+safe_low_point = 82.58
+safe_high_point = 82.60
 
 def USDTINR(): #tether
     global curr_usdt_price
@@ -60,12 +60,14 @@ def USDTINR(): #tether
 
 def BuyUSDT():
     global safe_low_point
-    
-    print("######################        USDT Value Dropped Below Low Margin     #######################")
+    # Buy()
+    print()
+    print("######################   ⬇   USDT Value Dropped Below Low Margin   ⬇  ######################")
     print("********************** | Buying USDT worth of Rs.100 - Checkout done | **********************")
+    print()
 
     safe_low_point -= 1
-    print("Updated Low Margin Value : " + str(safe_low_point))
+    print("Updated Low Margin Value : " + str(safe_low_point) + " USDT")
 
 def sell():
     driver.find_element(By.XPATH, "//button[normalize-space()='SELL USDT']").click() # checking out ...
@@ -76,11 +78,13 @@ def sell():
 def SellUSDT():
     global safe_high_point
     # sell()
-    print("######################          USDT Value Rose Above High Margin       ######################")
+    print()
+    print("######################    ⬆   USDT Value Rose Above High Margin   ⬆    ######################")
     print("********************** | Selling USDT worth of Rs.100 - Checkout done | **********************")
+    print()
 
     safe_high_point += 1
-    print("Updated High Margin Value : " + str(safe_high_point))
+    print("Updated High Margin Value : " + str(safe_high_point) + " USDT")
 
 
 def comparision(): # resolve between comparator of curr value and safe value points - done
