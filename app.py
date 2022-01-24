@@ -32,7 +32,7 @@ global curr_usdt_price
 global safe_low_point
 global safe_high_point
 
-safe_low_point = 85.00
+safe_low_point = 00.00
 safe_high_point = 100.00
 
 def USDTINR(): #tether
@@ -45,14 +45,18 @@ def USDTINR(): #tether
 
     print("USDT-INR : " + usdtprice + " | " + curr_time)
 
-# def BuyUSDT():
-#     driver.maximize_window()
 
-# def SellUSDT():
-#     driver.maximize_window()
+def BuyUSDT():
+    print("USDT value dropped below *LOW!")
+    print("Buying USDT worth of Rs.100 - Checkout done")
 
 
-def check(): # resolve between comparator of curr value and safe value points
+def SellUSDT():
+    print("USDT value rose above *HIGH*!")
+    print("Selling USDT worth of Rs.100 - Checkout done")
+
+
+def check(): # resolve between comparator of curr value and safe value points - done
 
     # Conversion
     temp_format_usdt_price = ""
@@ -60,16 +64,18 @@ def check(): # resolve between comparator of curr value and safe value points
         if char.isdigit():
             temp_format_usdt_price += (char)
 
-    usdt_price = float(temp_format_usdt_price) / 100
+    usdt_price = float(temp_format_usdt_price) / 100 #Mathematical value of curr_usdt
 
     if usdt_price <= safe_low_point:
-        print("curr < safe")
-        # BuyUSDT()
+        
+        BuyUSDT()
+
     elif usdt_price >= safe_high_point:
-        print("curr > safe")
-        # SellUSDT()
+        
+        SellUSDT()
+
     else:
-        print("Looking for elevation point : " + str(usdt_price) + '\n')
+        print("Looking for elevation point : " + str(usdt_price))
 
 
 
