@@ -22,10 +22,10 @@ chromeOptions.add_argument("--disable-notifications")
 # chromeOptions.add_experimental_option("prefs", { "profile.default_content_setting_values.notifications": 2 }) 
 
 driver = webdriver.Chrome(service = PATH, options = chromeOptions)
-driver.maximize_window()
-driver.minimize_window()
+# driver.maximize_window()
+# driver.minimize_window()
 driver.get(url) # launches the broswer and open url
-time.sleep(10) # very important everything to load before exicuting commands // safe at 6
+time.sleep(15) # very important everything to load before exicuting commands // safe at 5
 
 #Commands:
 global curr_usdt_price
@@ -61,17 +61,16 @@ def check(): # resolve between comparator of curr value and safe value points
             temp_format_usdt_price += (char)
 
     usdt_price = float(temp_format_usdt_price) / 100
-    print(usdt_price)
 
+    if usdt_price <= safe_low_point:
+        print("curr < safe")
+        # BuyUSDT()
+    elif usdt_price >= safe_high_point:
+        print("curr > safe")
+        # SellUSDT()
+    else:
+        print("Looking for elevation point : " + str(usdt_price) + '\n')
 
-    # if usdt_price <= safe_low_point:
-    #     print("curr < safe")
-    #     # BuyUSDT()
-    # elif usdt_price >= safe_high_point:
-    #     print("curr > safe")
-    #     # SellUSDT()
-    # else:
-    #     print("Looking for elevation point : " + usdt_price + '\n')
 
 
 def debug():
