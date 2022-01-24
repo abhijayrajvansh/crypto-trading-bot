@@ -44,8 +44,9 @@ global curr_usdt_price
 global safe_low_point
 global safe_high_point
 
-safe_low_point = 82.58
-safe_high_point = 82.60
+# Sensitive end points to observer fluctuatios: RESET at 00.00 and 100.00
+safe_low_point = 82.49
+safe_high_point = 82.46
 
 def USDTINR(): #tether
     global curr_usdt_price
@@ -66,7 +67,7 @@ def BuyUSDT():
     print("********************** | Buying USDT worth of Rs.100 - Checkout done | **********************")
     print()
 
-    safe_low_point -= 1
+    safe_low_point -= 0.1
     print("Updated Low Margin Value : " + str(safe_low_point) + " USDT")
 
 def sell():
@@ -77,13 +78,13 @@ def sell():
 
 def SellUSDT():
     global safe_high_point
-    # sell()
+    sell()
     print()
     print("######################    ⬆   USDT Value Rose Above High Margin   ⬆    ######################")
     print("********************** | Selling USDT worth of Rs.100 - Checkout done | **********************")
     print()
 
-    safe_high_point += 1
+    safe_high_point += 0.1
     print("Updated High Margin Value : " + str(safe_high_point) + " USDT")
 
 
