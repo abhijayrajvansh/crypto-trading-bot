@@ -52,11 +52,11 @@ def BuyUSDT():
 
 
 def SellUSDT():
-    print("USDT value rose above *HIGH*!")
-    print("Selling USDT worth of Rs.100 - Checkout done")
+    print("######################          USDT Value Rose Above High Margin       ######################")
+    print("********************** | Selling USDT worth of Rs.100 - Checkout done | **********************")
 
 
-def check(): # resolve between comparator of curr value and safe value points - done
+def comparision(): # resolve between comparator of curr value and safe value points - done
 
     # Conversion
     temp_format_usdt_price = ""
@@ -81,7 +81,7 @@ def check(): # resolve between comparator of curr value and safe value points - 
 
 def debug():
     USDTINR()
-    check()
+    comparision()
 
 debug()
 
@@ -91,7 +91,7 @@ debug()
 #     try:
 #         time.sleep(1)
 #         USDTINR()
-#         check()
+#         comparision()
 #     except Exception as e:
 #         driver.quit()
 #         break
@@ -100,4 +100,4 @@ debug()
 # while True:
 #     time.sleep(1)
     # USDTINR()
-    # check()
+    # comparision()
