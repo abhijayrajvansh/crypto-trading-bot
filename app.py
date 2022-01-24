@@ -31,16 +31,15 @@ time.sleep(5) # very important to load before exicuting commands
 def USDTINR(): #tether
 
     usdtprice = driver.find_element(By.XPATH, "//span[@class='latest-trade-price']").text # Current Crypto Price - working
-    usdt24h = driver.find_element(By.XPATH, "//p[@class='value -c-red']").text # 24 hours percentage change - working
+    # usdt24h = driver.find_element(By.XPATH, "//p[@class='value -c-red']").text # 24 hours percentage change - NOT working
     curr_time = time.strftime('%H:%M:%S %d/%m/%y', time.localtime())
 
-    print("USDT-INR : " + usdtprice + " | 24h-Change : " + usdt24h + " | " + curr_time)
+    print("USDT-INR : " + usdtprice + " | " + curr_time + '\n')
 
 while True:
     try:
         time.sleep(1)
         USDTINR()
-        print()
     except Exception as e:
         driver.quit()
         break
