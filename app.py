@@ -11,8 +11,8 @@ import datetime
 import time
 
 pwd = os.getcwd()
-
 PATH = Service(pwd + "/chromedriver")
+
 url = "https://coindcx.com/trade/USDTINR"
 
 # Handling Chrome Options:
@@ -23,6 +23,7 @@ chromeOptions.add_argument("--disable-notifications")
 
 driver = webdriver.Chrome(service = PATH, options = chromeOptions)
 driver.maximize_window()
+driver.minimize_window()
 driver.get(url) # launches the broswer and open url
 time.sleep(5) # very important to load before exicuting commands
 
