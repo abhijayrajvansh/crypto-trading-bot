@@ -15,30 +15,25 @@ pwd = os.getcwd()
 PATH = Service(pwd + "/chromedriver")
 url = "https://coindcx.com/trade/USDTINR"
 
-
 # Handling Chrome Options:
 chromeOptions = Options()
 chromeOptions.add_argument("--disable-extensions")
 chromeOptions.add_argument("--disable-notifications")
 # chromeOptions.add_experimental_option("prefs", { "profile.default_content_setting_values.notifications": 2 }) 
 
-
 driver = webdriver.Chrome(service = PATH, options = chromeOptions)
 driver.maximize_window()
 driver.get(url) # launches the broswer and open url
 time.sleep(5) # very important to load before exicuting commands
-
-
 
 #Commands:
 def USDTINR(): #tether
 
     usdtprice = driver.find_element(By.XPATH, "//span[@class='latest-trade-price']").text # Current Crypto Price - working
     usdt24h = driver.find_element(By.XPATH, "//p[@class='value -c-red']").text # 24 hours percentage change - working
-    curr_time = time.strftime('%H:%M:%S %d/%m/%y', time.gmtime())
+    curr_time = time.strftime('%H:%M:%S %d/%m/%y', time.localtime())
 
-    print("USDT-INR : " + usdtprice + " | 24h change : " + usdt24h + " | " + curr_time)
-
+    print("USDT-INR : " + usdtprice + " | 24h-Change : " + usdt24h + " | " + curr_time)
 
 while True:
     try:
