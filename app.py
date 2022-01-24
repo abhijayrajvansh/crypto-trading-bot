@@ -32,7 +32,7 @@ global curr_usdt_price
 global safe_low_point
 global safe_high_point
 
-safe_low_point = 00.00
+safe_low_point = 85.00
 safe_high_point = 100.00
 
 def USDTINR(): #tether
