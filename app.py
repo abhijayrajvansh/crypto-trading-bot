@@ -21,9 +21,11 @@ chromeOptions.add_argument("--disable-extensions")
 chromeOptions.add_argument("--disable-notifications")
 # chromeOptions.add_experimental_option("prefs", { "profile.default_content_setting_values.notifications": 2 }) 
 
+# driver setup:
 driver = webdriver.Chrome(service = PATH, options = chromeOptions)
 # driver.maximize_window()
 # driver.minimize_window()
+
 driver.get(url) # launches the broswer and open url
 time.sleep(15) # very important everything to load before exicuting commands // safe at 5
 
@@ -32,8 +34,8 @@ global curr_usdt_price
 global safe_low_point
 global safe_high_point
 
-safe_low_point = 00.00
-safe_high_point = 90.00
+safe_low_point = 82.76
+safe_high_point = 82.78
 
 def USDTINR(): #tether
     global curr_usdt_price
@@ -47,13 +49,23 @@ def USDTINR(): #tether
 
 
 def BuyUSDT():
+    global safe_low_point
+    
     print("######################        USDT Value Dropped Below Low Margin     #######################")
     print("********************** | Buying USDT worth of Rs.100 - Checkout done | **********************")
 
+    safe_low_point -= 1
+    print("Updates Low Margin Value : " + str(safe_low_point))
+
+
 
 def SellUSDT():
+    global safe_high_point
     print("######################          USDT Value Rose Above High Margin       ######################")
     print("********************** | Selling USDT worth of Rs.100 - Checkout done | **********************")
+
+    safe_high_point += 1
+    print("Updated High Margin Value : " + str(safe_high_point))
 
 
 def comparision(): # resolve between comparator of curr value and safe value points - done
@@ -77,20 +89,26 @@ def comparision(): # resolve between comparator of curr value and safe value poi
     else:
         print("Looking for elevation point : " + str(usdt_price))
 
+# def debug():
+#     USDTINR()
+#     comparision()
+#     print()
+# debug()
     
 # Actual Running time:
-while True:
-    try:
-        time.sleep(1)
-        USDTINR()
-        comparision()
-        print()
-    except Exception as e:
-        driver.quit()
-        break
+# while True:
+#     try:
+#         time.sleep(1)
+#         USDTINR()
+#         comparision()
+#         print()
+#     except Exception as e:
+#         driver.quit()
+#         break
 
 # Debug Running time with errors:
-# while True:
-#     time.sleep(1)
-    # USDTINR()
-    # comparision()
+while True:
+    time.sleep(1)
+    USDTINR()
+    comparision()
+    print()
