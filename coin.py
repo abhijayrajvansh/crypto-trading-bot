@@ -13,7 +13,7 @@ import time
 pwd = os.getcwd()
 PATH = Service(pwd + "/chromedriver")
 
-url = "https://coindcx.com/trade/USDTINR"
+url = input("Enter Cryptocoin Link : ")
 
 # Handling Chrome Options:
 chromeOptions = Options()
@@ -41,10 +41,12 @@ def login():
     print()
 
 
+# Coin Details:
+global cryptoname
+global cryptoprice
 
-
-# Global Variables
-global curr_usdt_price
+# Global Variables:
+global curr_coin_price
 global safe_low_BID
 global safe_high_BID
 global bot_money
@@ -53,16 +55,6 @@ global total_profit
 global elevation_amount
 global flag
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-global initial_bal
-global available_bal
-
-
-
-# Starting values: (wallet)
-initial_bal = 100.00 # to be updated with driver 
-available_bal = 00.00
-total_profit = 0
-
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~BIDING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -79,38 +71,39 @@ elevation_amount = 1 # 0.1 value so huge fluctuation
 bot_money = input("Enter Bot Money : ") # Bot allowed money to buy worth in rupees
 bot_money = float(bot_money)
 initial_allowed_money_to_bot = bot_money
-selling_usdt_worth_rupees = bot_money + ((bot_money * 1.2) / 100) # calculation required for 1.2% increase
-flag = 0
-
+selling_coin_worth_rupees = bot_money + ((bot_money * 1.2) / 100) # calculation required for 1.2% increase
+total_profit = 0
+flag = 0 # 0: to start from buying order | 1: to start from selling order
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  CRYPTOCURRENCY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def USDTINR(): # Tether
-    global curr_usdt_price
+def CRYPTOCURRENCY(): #Coin
+    global cryptoname
+    global curr_coin_price
 
-    usdtprice = driver.find_element(By.XPATH, "//p[@class='table__data current-price -fw-bolder']").text # Current Crypto Price - working
-    curr_usdt_price = usdtprice
-    # usdt24h = driver.find_element(By.XPATH, "//p[@class='value -c-red']").text # 24 hours percentage change - NOT working
+    cryptoname = driver.find_element(By.XPATH, "//span[@class='-fw-bold -c-hide-on-portrait']").text
+    cryptoprice = driver.find_element(By.XPATH, "//p[@class='table__data current-price -fw-bolder']").text # Current Crypto Price - working
+    curr_coin_price = cryptoprice
     curr_time = time.strftime('%H:%M:%S %d/%m/%y', time.localtime())
 
     print("Profit So Far: " + str(total_profit))
-    print("Current USDT-INR : " + usdtprice + " | " + curr_time)
-
+    print("Current " + cryptoname + " : " + cryptoprice + " | " + curr_time)
 
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  BUY AREA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def BuyUSDT():
+def BuyCRYPTO():
     global safe_low_BID
     global bot_money
     # Buy()
+    print("Executing Buying Order ...")
     print()
-    print("######################    ⬇   USDT Value Dropped Below Low Margin   ⬇   ######################")
-    print("********************** | Buying USDT worth of Rs." + str(bot_money) + " - Checkout done | **********************")
+    print("######################    ⬇   " + cryptoname + " Value Dropped Below Low Margin   ⬇   ######################")
+    print("********************** | Buying " + cryptoname + " worth of Rs." + str(bot_money) + " - Checkout done | **********************")
     print()
-    print("Updated Low Margin Value : " + str(safe_low_BID) + " USDT")
+    # print("Updated Low Margin Value : " + str(safe_low_BID) + " " + cryptoname)
 
     bot_money = 0 # now its time to sell
 
@@ -121,20 +114,19 @@ def buy():
     print()
 
 
-
-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  SELL AREA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def SellUSDT():
+def SellCRYPTO():
     global safe_high_BID
     global bot_money
     global total_profit
+    print("Executing Selling Order ...")
     # sell()
     print()
-    print("######################    ⬆   USDT Value Rose Above High Margin   ⬆    ######################")
-    print("********************** | Selling USDT worth of Rs." + str(selling_usdt_worth_rupees) + " - Checkout done | **********************")
+    print("######################    ⬆   " + cryptoname + " Value Rose Above High Margin   ⬆    ######################")
+    print("********************** | Selling " + cryptoname + " worth of Rs." + str(selling_coin_worth_rupees) + " - Checkout done | **********************")
     print()
-    print("Updated High Margin Value : " + str(safe_high_BID) + " USDT")
+    # print("Updated High Margin Value : " + str(safe_high_BID) + " " + cryptoname)
 
     bot_money = initial_allowed_money_to_bot
     total_profit += ((bot_money * 1.2) / 100) - ((bot_money * 0.2) / 100)
@@ -144,50 +136,47 @@ def SellUSDT():
 def sell():
     print()
     # driver.find_element(By.XPATH, "//button[normalize-space()='SELL USDT']").click() # checking out ...
-    # driver.find_element(By.XPATH, "//input[@id='mat-input-2']").send_keys(selling_usdt_worth_rupees) # filling order value ...
+    # driver.find_element(By.XPATH, "//input[@id='mat-input-2']").send_keys(selling_coin_worth_rupees) # filling order value ...
     # driver.find_element(By.XPATH, "//button[normalize-space()='Cancel']").click() # cancelling ...
 
 
 
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ COMPARATOR ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ COMPARATOR ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 def comparision(): # resolve between comparator of curr value and safe value points - done
     global flag
     # Conversion
-    temp_format_usdt_price = ""
-    for char in curr_usdt_price:
+    temp_format_coin_price = ""
+    for char in curr_coin_price:
         if char.isdigit():
-            temp_format_usdt_price += (char)
+            temp_format_coin_price += (char)
 
-    usdt_price = float(temp_format_usdt_price) / 100 #Mathematical value of curr_usdt
+    coin_price = float(temp_format_coin_price) / 100 #Mathematical value of curr_crypto_coin
 
-
-    if usdt_price <= safe_low_BID and bot_money != 0:
-        BuyUSDT()
+    if coin_price <= safe_low_BID and bot_money != 0:
+        BuyCRYPTO()
         flag = 1
 
-    elif usdt_price >= safe_high_BID and bot_money == 0:
-        SellUSDT()
+    elif coin_price >= safe_high_BID and bot_money == 0:
+        SellCRYPTO()
         flag = 0
 
     else:
         if flag == 0:
-            print("Incoming Orders: Buying At: " + str(safe_low_BID))
+            print("Incoming Orders: Buying At: " + str(safe_low_BID) + cryptoname)
         else:
-            print("Incoming Orders: Selling At: " + str(safe_high_BID))
+            print("Incoming Orders: Selling At: " + str(safe_high_BID) + cryptoname)
 
 
-
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DEBUGGER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DEBUGGER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #login()
 
 
 
 def debug():
     time.sleep(1)
-    USDTINR()
+    CRYPTOCURRENCY()
     comparision()
     print()
 
@@ -197,18 +186,17 @@ def debug():
 # Debug Running time with errors:
 while True:
     time.sleep(1)
-    USDTINR()
-    comparision()
     print()
+    CRYPTOCURRENCY()
+    comparision()
     
 # Actual Running time:
 # while True:
 #     try:
 #         time.sleep(1)
-#         USDTINR()
+#         CRYPTOCURRENCY()
 #         comparision()
 #         print()
 #     except Exception as e:
 #         driver.quit()
 #         break
-

@@ -2,8 +2,8 @@
 from functools import total_ordering
 
 
-usdt_price = 81.43
-safe_low_BID = 80.00
+usdt_price = 0
+safe_low_BID = 81.61
 
 
 safe_high_BID = safe_low_BID + ((safe_low_BID * 1.2) / 100)
@@ -29,6 +29,7 @@ else:
     print("looking for elevation...")
 
 selling_usdt_worth_rupees = bot_money + ((bot_money * 1.2) / 100)
+
 total_profit += ((bot_money * 1.2) / 100) - ((bot_money * 0.2) / 100)
 print(total_profit)
 
