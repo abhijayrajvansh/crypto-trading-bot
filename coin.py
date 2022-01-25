@@ -1,6 +1,6 @@
 #/
 #    author:   abhijayrajvansh
-#    created:  24.01.2022 19:52:03
+#    created:  26.01.2022 01:12:16
 #/
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -13,7 +13,8 @@ import time
 pwd = os.getcwd()
 PATH = Service(pwd + "/chromedriver")
 
-url = input("Enter Cryptocoin Link : ")
+# url = input("Enter Cryptocoin Link : ")
+url = "https://coindcx.com/trade/USDTINR"
 
 # Handling Chrome Options:
 chromeOptions = Options()
@@ -37,8 +38,9 @@ def login():
     driver.find_element(By.XPATH, "//input[@id='mat-input-5']").send_keys("@BJ@crypto!2711")
     driver.find_element(By.XPATH, "//button[@type='submit']").click()
     time.sleep(60)
-    print("Successfully Logged In To CoinDCX Acc!")
-    print()
+    print("``````````````````````````````````````````")
+    print("| Successfully Logged In To CoinDCX Acc! |")
+    print(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,")
 
 
 # Coin Details:
@@ -60,20 +62,34 @@ global flag
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~BIDING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Sensitive end points to observer fluctuatios: RESET at 00.00 and 100.00
-safe_low_BID = input("Enter Low BID Value : ")
-safe_low_BID = float(safe_low_BID)
-safe_high_BID = safe_low_BID + ((safe_low_BID * 1.2) / 100)
+print()
+safe_low_BID = 80.00
+# safe_low_BID = input("Enter Low BID Value : ")
+# safe_low_BID = float(safe_low_BID)
 
+safe_high_BID = safe_low_BID + ((safe_low_BID * 1.2) / 100)
+# safe_high_BID = input("Enter High BID Value : ")
+# safe_high_BID = float(safe_high_BID)
+
+percent_increase = (100 * (safe_high_BID - safe_low_BID)) / safe_low_BID
 elevation_amount = 1 # 0.1 value so huge fluctuation
 
 
 # Trading Parameters
-bot_money = input("Enter Bot Money : ") # Bot allowed money to buy worth in rupees
-bot_money = float(bot_money)
+print()
+bot_money = 100 #money given to bot for trading
+# bot_money = input("Enter Bot Money : ") # Bot allowed money to buy worth in rupees
+# bot_money = float(bot_money)
+
 initial_allowed_money_to_bot = bot_money
-selling_coin_worth_rupees = bot_money + ((bot_money * 1.2) / 100) # calculation required for 1.2% increase
+selling_coin_worth_rupees = bot_money + ((bot_money * (percent_increase)) / 100) # calculation required for 1.2% increase
+#highest bidding ka percent diff with low is selling...
+
 total_profit = 0
 flag = 0 # 0: to start from buying order | 1: to start from selling order
+
+def BIDING():
+    print("Low BID Margin : " + str(safe_low_BID) + " | High BID Margin : " + str(safe_high_BID))
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  CRYPTOCURRENCY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -87,9 +103,9 @@ def CRYPTOCURRENCY(): #Coin
     curr_coin_price = cryptoprice
     curr_time = time.strftime('%H:%M:%S %d/%m/%y', time.localtime())
 
-    print("Profit So Far: " + str(total_profit))
-    print("Current " + cryptoname + " : " + cryptoprice + " | " + curr_time)
-
+    # print("Current " + cryptoname + " : " + cryptoprice + " | " + curr_time)
+    print("~~~~~~~~~~~~~~(" + curr_time + ")~~~~~~~~~~~~~~")
+    print("Coin Name  : " + cryptoname + " | Coin Price      : " + cryptoprice)
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  BUY AREA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -108,7 +124,6 @@ def BuyCRYPTO():
     bot_money = 0 # now its time to sell
 
     # safe_low_BID -= elevation_amount
-
 
 def buy():
     print()
@@ -144,7 +159,7 @@ def sell():
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ COMPARATOR ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def comparision(): # resolve between comparator of curr value and safe value points - done
+def COMPARISION(): # resolve between comparator of curr value and safe value points - done
     global flag
     # Conversion
     temp_format_coin_price = ""
@@ -164,39 +179,34 @@ def comparision(): # resolve between comparator of curr value and safe value poi
 
     else:
         if flag == 0:
-            print("Next Buying Order At : " + str(safe_low_BID) + " " + cryptoname)
+            print("Incoming Buying Order At : " + str(safe_low_BID) + " " + cryptoname)
         else:
-            print("Next Selling Order At : " + str(safe_high_BID) + " " + cryptoname)
+            print("Incoming Selling Order At : " + str(safe_high_BID) + " " + cryptoname)
+    print("```````````````````````````````````````````````")
+    print("| Profit So Far: " + str(total_profit))
+    print(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,")
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DEBUGGER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #login()
 
 
-
-def debug():
-    time.sleep(1)
-    CRYPTOCURRENCY()
-    comparision()
-    print()
-
-# for i in range(11): # Testing bot
-#     debug()
-
 # Debug Running time with errors:
 while True:
     time.sleep(1)
-    print()
     CRYPTOCURRENCY()
-    comparision()
+    BIDING()
+    COMPARISION()
+    print('\n')
     
 # Actual Running time:
 # while True:
 #     try:
 #         time.sleep(1)
 #         CRYPTOCURRENCY()
-#         comparision()
-#         print()
+#         BIDING()
+#         COMPARISION()
+#         print('\n')
 #     except Exception as e:
 #         driver.quit()
 #         break
