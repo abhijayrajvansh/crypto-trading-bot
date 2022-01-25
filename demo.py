@@ -36,19 +36,55 @@ def login():
     driver.find_element(By.XPATH, "//button[@type='submit']").click()
     time.sleep(60)
     print("Successfully Logged In!")
-# login()
 
 
-#Commands:
+
+
+# Global Variables
 global curr_usdt_price
-global safe_low_point
-global safe_high_point
+global safe_low_BID
+global safe_high_BID
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+global elevation_amount
+global initial_bal
+global available_bal
+global total_profit
+
+
+
+
+
+# Starting values:
+initial_bal = 100 # to be updated
+available_bal = 0
+
 
 # Sensitive end points to observer fluctuatios: RESET at 00.00 and 100.00
-safe_low_point = 00.00
-safe_high_point = 100.00
+safe_low_BID = 00.00
+safe_high_BID = 100.00
 
-def USDTINR(): #tether
+
+# Trading Parameters
+selling_worth_rupees = 100
+buying_worth_rupees = 100 # calculation required for 1% increase
+elevation_amount = 1 # 0.1 value so huge fluctuation
+
+
+
+
+def wallet():
+    global initial_bal
+    
+
+
+
+
+
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  CRYPTOCURRENCY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def USDTINR(): # Tether
     global curr_usdt_price
 
     usdtprice = driver.find_element(By.XPATH, "//p[@class='table__data current-price -fw-bolder']").text # Current Crypto Price - working
@@ -59,34 +95,45 @@ def USDTINR(): #tether
     print("Current USDT-INR : " + usdtprice + " | " + curr_time)
 
 
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  BUY AREA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 def BuyUSDT():
-    global safe_low_point
+    global safe_low_BID
     # Buy()
     print()
     print("######################   ⬇   USDT Value Dropped Below Low Margin   ⬇  ######################")
     print("********************** | Buying USDT worth of Rs.100 - Checkout done | **********************")
     print()
 
-    safe_low_point -= 0.01
-    print("Updated Low Margin Value : " + str(safe_low_point) + " USDT")
+    safe_low_BID -= elevation_amount
+    print("Updated Low Margin Value : " + str(safe_low_BID) + " USDT")
 
-def sell():
-    driver.find_element(By.XPATH, "//button[normalize-space()='SELL USDT']").click() # checking out ...
-    driver.find_element(By.XPATH, "//input[@id='mat-input-2']").send_keys(100) # filling order value ...
-    driver.find_element(By.XPATH, "//button[normalize-space()='Cancel']").click() # cancelling ...
 
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  SELL AREA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 def SellUSDT():
-    global safe_high_point
+    global safe_high_BID
     # sell()
     print()
     print("######################    ⬆   USDT Value Rose Above High Margin   ⬆    ######################")
     print("********************** | Selling USDT worth of Rs.100 - Checkout done | **********************")
     print()
 
-    safe_high_point += 0.01
-    print("Updated High Margin Value : " + str(safe_high_point) + " USDT")
+    safe_high_BID += elevation_amount
+    print("Updated High Margin Value : " + str(safe_high_BID) + " USDT")
 
+def sell():
+    driver.find_element(By.XPATH, "//button[normalize-space()='SELL USDT']").click() # checking out ...
+    driver.find_element(By.XPATH, "//input[@id='mat-input-2']").send_keys(selling_worth_rupees) # filling order value ...
+    driver.find_element(By.XPATH, "//button[normalize-space()='Cancel']").click() # cancelling ...
+
+
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ COMPARATOR ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 def comparision(): # resolve between comparator of curr value and safe value points - done
 
@@ -98,17 +145,20 @@ def comparision(): # resolve between comparator of curr value and safe value poi
 
     usdt_price = float(temp_format_usdt_price) / 100 #Mathematical value of curr_usdt
 
-    if usdt_price <= safe_low_point:
-        
+
+    if usdt_price <= safe_low_BID:
         BuyUSDT()
 
-    elif usdt_price >= safe_high_point:
-        
+    elif usdt_price >= safe_high_BID:
         SellUSDT()
 
     else:
-        print("Incoming Orders: Buying At: " + str(safe_low_point) + " | Selling At: " + str(safe_high_point))
+        print("Incoming Orders: Buying At: " + str(safe_low_BID) + " | Selling At: " + str(safe_high_BID))
 
+
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DEBUGGER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # def debug():
 #     USDTINR()
 #     comparision()
