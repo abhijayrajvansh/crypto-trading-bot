@@ -164,9 +164,9 @@ def comparision(): # resolve between comparator of curr value and safe value poi
 
     else:
         if flag == 0:
-            print("Incoming Orders: Buying At: " + str(safe_low_BID) + cryptoname)
+            print("Next Buying Order At : " + str(safe_low_BID) + " " + cryptoname)
         else:
-            print("Incoming Orders: Selling At: " + str(safe_high_BID) + cryptoname)
+            print("Next Selling Order At : " + str(safe_high_BID) + " " + cryptoname)
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DEBUGGER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
