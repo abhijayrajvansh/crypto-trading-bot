@@ -45,8 +45,8 @@ global safe_low_point
 global safe_high_point
 
 # Sensitive end points to observer fluctuatios: RESET at 00.00 and 100.00
-safe_low_point = 82.49
-safe_high_point = 82.46
+safe_low_point = 00.00
+safe_high_point = 100.00
 
 def USDTINR(): #tether
     global curr_usdt_price
@@ -56,7 +56,7 @@ def USDTINR(): #tether
     # usdt24h = driver.find_element(By.XPATH, "//p[@class='value -c-red']").text # 24 hours percentage change - NOT working
     curr_time = time.strftime('%H:%M:%S %d/%m/%y', time.localtime())
 
-    print("USDT-INR : " + usdtprice + " | " + curr_time)
+    print("Current USDT-INR : " + usdtprice + " | " + curr_time)
 
 
 def BuyUSDT():
@@ -67,7 +67,7 @@ def BuyUSDT():
     print("********************** | Buying USDT worth of Rs.100 - Checkout done | **********************")
     print()
 
-    safe_low_point -= 0.1
+    safe_low_point -= 0.01
     print("Updated Low Margin Value : " + str(safe_low_point) + " USDT")
 
 def sell():
@@ -78,13 +78,13 @@ def sell():
 
 def SellUSDT():
     global safe_high_point
-    sell()
+    # sell()
     print()
     print("######################    ⬆   USDT Value Rose Above High Margin   ⬆    ######################")
     print("********************** | Selling USDT worth of Rs.100 - Checkout done | **********************")
     print()
 
-    safe_high_point += 0.1
+    safe_high_point += 0.01
     print("Updated High Margin Value : " + str(safe_high_point) + " USDT")
 
 
@@ -117,7 +117,7 @@ def comparision(): # resolve between comparator of curr value and safe value poi
 # Actual Running time:
 # while True:
 #     try:
-#         time.sleep(1)
+#         time.sleep(1) # live update sec interval
 #         USDTINR()
 #         comparision()
 #         print()
@@ -127,7 +127,7 @@ def comparision(): # resolve between comparator of curr value and safe value poi
 
 # Debug Running time with errors:
 while True:
-    time.sleep(1)
+    time.sleep(3) # live update sec interval
     USDTINR()
     comparision()
     print()
