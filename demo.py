@@ -14,7 +14,7 @@ pwd = os.getcwd()
 PATH = Service(pwd + "/chromedriver")
 
 # url = input("Enter Cryptocoin Link : ")
-url = "https://coindcx.com/trade/USDTINR"
+url = "https://coindcx.com/trade/BTCINR"
 
 # Handling Chrome Options:
 chromeOptions = Options()
@@ -64,12 +64,12 @@ global flag
 # Sensitive end points to observer fluctuatios: RESET at 00.00 and 100.00
 print()
 safe_low_BID = 80.00
-# safe_low_BID = input("Enter Low BID Value : ")
-# safe_low_BID = float(safe_low_BID)
+safe_low_BID = input("Enter Low BID Value : ")
+safe_low_BID = float(safe_low_BID)
 
 safe_high_BID = safe_low_BID + ((safe_low_BID * 1.2) / 100)
-# safe_high_BID = input("Enter High BID Value : ")
-# safe_high_BID = float(safe_high_BID)
+safe_high_BID = input("Enter High BID Value : ")
+safe_high_BID = float(safe_high_BID)
 
 percent_increase = (100 * (safe_high_BID - safe_low_BID)) / safe_low_BID
 elevation_amount = 1 # 0.1 value so huge fluctuation
@@ -144,7 +144,7 @@ def SellCRYPTO():
     # print("Updated High Margin Value : " + str(safe_high_BID) + " " + cryptoname)
 
     bot_money = initial_allowed_money_to_bot
-    total_profit += ((bot_money * 1.2) / 100) - ((bot_money * 0.2) / 100)
+    total_profit += ((bot_money * (percent_increase)) / 100) - ((bot_money * 0.2) / 100)
 
     # safe_high_BID += elevation_amount
 
