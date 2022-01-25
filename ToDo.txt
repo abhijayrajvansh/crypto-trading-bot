@@ -1,0 +1,3 @@
+Update required before real trading:
+safe_high_BID = safe_low_BID + ((safe_low_BID * 1.2) / 100)
+// Low and High BID value
