@@ -110,7 +110,7 @@ def CRYPTOCURRENCY(): #Coin
 
     # print("Current " + cryptoname + " : " + cryptoprice + " | " + curr_time)
     print("~~~~~~~~~~~~~~~~~~~~(" + curr_time + ")~~~~~~~~~~~~~~~~~~~~")
-    print("Coin Name      : " + cryptoname + "   | Coin Price      : " + cryptoprice)
+    print("Coin Name      : " + cryptoname + "   | Curr Coin Price : " + cryptoprice)
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  BUY AREA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
