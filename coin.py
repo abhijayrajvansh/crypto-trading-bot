@@ -15,7 +15,7 @@ PATH = Service(pwd + "/chromedriver")
 
 # url = input("Enter Cryptocoin Link : ")
 url = "https://coindcx.com/trade/BTCINR"
-gi
+
 # Handling Chrome Options:
 chromeOptions = Options()
 chromeOptions.add_argument("--disable-extensions")
