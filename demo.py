@@ -37,7 +37,7 @@ def login():
     driver.find_element(By.XPATH, "//input[@id='mat-input-4']").send_keys("abhijayrajvansh01@gmail.com")
     driver.find_element(By.XPATH, "//input[@id='mat-input-5']").send_keys("@BJ@crypto!2711")
     driver.find_element(By.XPATH, "//button[@type='submit']").click()
-    time.sleep(60)
+    time.sleep(40)
     print("``````````````````````````````````````````")
     print("| Successfully Logged In To CoinDCX Acc! |")
     print(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,")
@@ -68,7 +68,7 @@ print()
 safe_low_BID = input("Enter Low BID Value : ")
 safe_low_BID = float(safe_low_BID)
 
-safe_high_BID = safe_low_BID + ((safe_low_BID * 1.4) / 100) # Automatic High BID will be set to 1.4% increase (0.2 & 0.2 brokerage_amount)
+safe_high_BID = safe_low_BID + ((safe_low_BID * 1.5) / 100) # Automatic High BID will be set to 1.5% increase (0.2 & 0.2 brokerage_amount)
 print("High BID Margin Set To : " + str(safe_high_BID) + " At 1.4% increase")
 # safe_high_BID = input("Enter High BID Value : ")
 # safe_high_BID = float(safe_high_BID)
@@ -84,7 +84,7 @@ bot_money = 100 #money given to bot for trading
 # bot_money = float(bot_money)
 
 initial_allowed_money_to_bot = bot_money
-selling_coins_worth_rupees = bot_money + ((bot_money * (percent_increase)) / 100) # calculation required for 1.2% increase
+selling_coins_worth_rupees = bot_money + ((bot_money * (percent_increase - 0.1)) / 100) # calculation required for 1.4% increase
 #highest bidding ka percent diff with low is selling...
 
 # Start from buying or selling: 
@@ -194,16 +194,21 @@ def COMPARISION(): # resolve between comparator of curr value and safe value poi
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DEBUGGER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#login()
+login()
 
+money = driver = driver.find_element(By.XPATH, "//div[@class='table__body ng-star-inserted']//div[2]//div[1]").text
+print(money)
+print()
+print("printing the 5th index : money[4]")
+print(money[4])
 
 # Debug Running time with errors:
-while True:
-    time.sleep(1)
-    CRYPTOCURRENCY()
-    BIDING_MARGIN()
-    COMPARISION()
-    print('\n\n')
+# while True:
+#     time.sleep(1)
+#     CRYPTOCURRENCY()
+#     BIDING_MARGIN()
+#     COMPARISION()
+#     print('\n\n')
     
 # Actual Running time:
 # while True:
