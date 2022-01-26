@@ -1,8 +1,6 @@
 
-
 usdt_price = 0
 safe_low_BID = 1500
-
 
 safe_high_BID = safe_low_BID + ((safe_low_BID * 1.2) / 100)
 safe_high_BID = 1950

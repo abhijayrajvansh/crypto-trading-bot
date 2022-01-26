@@ -1,6 +1,6 @@
 #/
 #    author:   abhijayrajvansh
-#    created:  26.01.2022 15:51:45
+#    created:  26.01.2022 01:12:16
 #/
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -109,8 +109,8 @@ def CRYPTOCURRENCY(): #Coin
     curr_time = time.strftime('%H:%M:%S %d/%m/%y', time.localtime())
 
     # print("Current " + cryptoname + " : " + cryptoprice + " | " + curr_time)
-    print("~~~~~~~~~~~~~~(" + curr_time + ")~~~~~~~~~~~~~~")
-    print("Coin Name  : " + cryptoname + " | Coin Price      : " + cryptoprice)
+    print("~~~~~~~~~~~~~~~~~~~~(" + curr_time + ")~~~~~~~~~~~~~~~~~~~~")
+    print("Coin Name      : " + cryptoname + "   | Coin Price      : " + cryptoprice)
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  BUY AREA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -184,12 +184,13 @@ def COMPARISION(): # resolve between comparator of curr value and safe value poi
 
     else:
         if flag == 0:
-            print("Incoming Buying Order At : " + str(safe_low_BID) + " " + cryptoname)
+            print("       Incoming Buying Order At : " + str(safe_low_BID) + " " + cryptoname)
         else:
-            print("Incoming Selling Order At : " + str(safe_high_BID) + " " + cryptoname)
-    print("```````````````````````````````````````````````")
+            print("       Incoming Selling Order At : " + str(safe_high_BID) + " " + cryptoname)
+
+    print("```````````````````````````````````````````````````````````")
     print("| Profit So Far: " + str(total_profit))
-    print(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,")
+    print(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,")
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DEBUGGER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -202,7 +203,7 @@ while True:
     CRYPTOCURRENCY()
     BIDING_MARGIN()
     COMPARISION()
-    print('\n')
+    print('\n\n')
     
 # Actual Running time:
 # while True:
