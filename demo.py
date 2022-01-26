@@ -53,23 +53,24 @@ global safe_low_BID
 global safe_high_BID
 global bot_money
 global initial_allowed_money_to_bot
+global brokerage_amt
 global total_profit
 global elevation_amount
 global flag
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+total_profit = 0
 
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~BIDING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~BIDING_MARGIN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Sensitive end points to observer fluctuatios: RESET at 00.00 and 100.00
 print()
-safe_low_BID = 80.00
+# safe_low_BID = 80.00
 safe_low_BID = input("Enter Low BID Value : ")
 safe_low_BID = float(safe_low_BID)
 
-safe_high_BID = safe_low_BID + ((safe_low_BID * 1.2) / 100)
-safe_high_BID = input("Enter High BID Value : ")
-safe_high_BID = float(safe_high_BID)
+safe_high_BID = safe_low_BID + ((safe_low_BID * 1.4) / 100) # Automatic High BID will be set to 1.4% increase (0.2 & 0.2 brokerage_amount)
+# safe_high_BID = input("Enter High BID Value : ")
+# safe_high_BID = float(safe_high_BID)
 
 percent_increase = (100 * (safe_high_BID - safe_low_BID)) / safe_low_BID
 elevation_amount = 1 # 0.1 value so huge fluctuation
@@ -82,13 +83,16 @@ bot_money = 100 #money given to bot for trading
 # bot_money = float(bot_money)
 
 initial_allowed_money_to_bot = bot_money
-selling_coin_worth_rupees = bot_money + ((bot_money * (percent_increase)) / 100) # calculation required for 1.2% increase
+selling_coins_worth_rupees = bot_money + ((bot_money * (percent_increase)) / 100) # calculation required for 1.2% increase
 #highest bidding ka percent diff with low is selling...
 
-total_profit = 0
+# Start from buying or selling: 
 flag = 0 # 0: to start from buying order | 1: to start from selling order
 
-def BIDING():
+# 0.2 % of each trade for paying as brokerage money to exchange:
+brokerage_amt = 0
+
+def BIDING_MARGIN():
     print("Low BID Margin : " + str(safe_low_BID) + " | High BID Margin : " + str(safe_high_BID))
 
 
@@ -113,18 +117,18 @@ def CRYPTOCURRENCY(): #Coin
 def BuyCRYPTO():
     global safe_low_BID
     global bot_money
+    global brokerage_amt
     # Buy()
-    print("Executing Buying Order ...")
-    print()
+    print("\nExecuting Buying Order ...\n")
     print("######################    ⬇   " + cryptoname + " Value Dropped Below Low Margin   ⬇   ######################")
-    print("********************** | Buying " + cryptoname + " worth of Rs." + str(bot_money) + " - Checkout done | **********************")
-    print()
+    print("********************** | Buying " + cryptoname + " worth of Rs." + str(bot_money) + " - Checkout done | **********************\n")
+
+    brokerage_amt += ((bot_money * 0.2) / 100)
+    bot_money = 0 # now its time to sell coins, yeaayy!
+
+
     # print("Updated Low Margin Value : " + str(safe_low_BID) + " " + cryptoname)
-
-    bot_money = 0 # now its time to sell
-
     # safe_low_BID -= elevation_amount
-
 def buy():
     print()
 
@@ -135,23 +139,23 @@ def SellCRYPTO():
     global safe_high_BID
     global bot_money
     global total_profit
-    print("Executing Selling Order ...")
+    global brokerage_amt
+    print("\nExecuting Selling Order ...\n")
     # sell()
-    print()
     print("######################    ⬆   " + cryptoname + " Value Rose Above High Margin   ⬆    ######################")
-    print("********************** | Selling " + cryptoname + " worth of Rs." + str(selling_coin_worth_rupees) + " - Checkout done | **********************")
-    print()
+    print("********************** | Selling " + cryptoname + " worth of Rs." + str(selling_coins_worth_rupees) + " - Checkout done | **********************" + '\n')
     # print("Updated High Margin Value : " + str(safe_high_BID) + " " + cryptoname)
 
-    bot_money = initial_allowed_money_to_bot
-    total_profit += ((bot_money * (percent_increase)) / 100) - ((bot_money * 0.2) / 100)
-
+    bot_money = initial_allowed_money_to_bot # now its time to buy, lessgoo!
+    # total_profit += ((bot_money * (percent_increase)) / 100) - ((bot_money * 0.2) / 100)
+    brokerage_amt += ((selling_coins_worth_rupees * 0.2) / 100)
+    total_profit += selling_coins_worth_rupees - bot_money - brokerage_amt
     # safe_high_BID += elevation_amount
 
 def sell():
     print()
     # driver.find_element(By.XPATH, "//button[normalize-space()='SELL USDT']").click() # checking out ...
-    # driver.find_element(By.XPATH, "//input[@id='mat-input-2']").send_keys(selling_coin_worth_rupees) # filling order value ...
+    # driver.find_element(By.XPATH, "//input[@id='mat-input-2']").send_keys(selling_coins_worth_rupees) # filling order value ...
     # driver.find_element(By.XPATH, "//button[normalize-space()='Cancel']").click() # cancelling ...
 
 
@@ -195,7 +199,7 @@ def COMPARISION(): # resolve between comparator of curr value and safe value poi
 while True:
     time.sleep(1)
     CRYPTOCURRENCY()
-    BIDING()
+    BIDING_MARGIN()
     COMPARISION()
     print('\n')
     
@@ -204,7 +208,7 @@ while True:
 #     try:
 #         time.sleep(1)
 #         CRYPTOCURRENCY()
-#         BIDING()
+#         BIDING_MARGIN()
 #         COMPARISION()
 #         print('\n')
 #     except Exception as e:
