@@ -69,6 +69,7 @@ safe_low_BID = input("Enter Low BID Value : ")
 safe_low_BID = float(safe_low_BID)
 
 safe_high_BID = safe_low_BID + ((safe_low_BID * 1.4) / 100) # Automatic High BID will be set to 1.4% increase (0.2 & 0.2 brokerage_amount)
+print("High BID Margin Set To : " + str(safe_high_BID) + " At 1.4% increase")
 # safe_high_BID = input("Enter High BID Value : ")
 # safe_high_BID = float(safe_high_BID)
 
