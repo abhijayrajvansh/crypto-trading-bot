@@ -37,7 +37,7 @@ def login():
     driver.find_element(By.XPATH, "//input[@id='mat-input-4']").send_keys("abhijayrajvansh01@gmail.com")
     driver.find_element(By.XPATH, "//input[@id='mat-input-5']").send_keys("@BJ@crypto!2711")
     driver.find_element(By.XPATH, "//button[@type='submit']").click()
-    time.sleep(60)
+    time.sleep(40)
     print("``````````````````````````````````````````")
     print("| Successfully Logged In To CoinDCX Acc! |")
     print(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,")
@@ -57,9 +57,11 @@ global brokerage_amt
 global total_profit
 global elevation_amount
 global flag
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 total_profit = 0
-
+# Start from buying or selling: 
+flag = 1   # always update with bot money
+# 0: to start from buying order | 1: to start from selling order
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~BIDING_MARGIN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Sensitive end points to observer fluctuatios: RESET at 00.00 and 100.00
@@ -68,7 +70,7 @@ print()
 safe_low_BID = input("Enter Low BID Value : ")
 safe_low_BID = float(safe_low_BID)
 
-safe_high_BID = safe_low_BID + ((safe_low_BID * 1.4) / 100) # Automatic High BID will be set to 1.4% increase (0.2 & 0.2 brokerage_amount)
+safe_high_BID = safe_low_BID + ((safe_low_BID * 1.5) / 100) # Automatic High BID will be set to 1.5% increase (0.2 & 0.2 brokerage_amount)
 print("High BID Margin Set To : " + str(safe_high_BID) + " At 1.4% increase")
 # safe_high_BID = input("Enter High BID Value : ")
 # safe_high_BID = float(safe_high_BID)
@@ -79,16 +81,13 @@ elevation_amount = 1 # 0.1 value so huge fluctuation
 
 # Trading Parameters
 print()
-bot_money = 100 #money given to bot for trading
+bot_money = 0 #money given to bot for trading
 # bot_money = input("Enter Bot Money : ") # Bot allowed money to buy worth in rupees
 # bot_money = float(bot_money)
 
-initial_allowed_money_to_bot = bot_money
-selling_coins_worth_rupees = bot_money + ((bot_money * (percent_increase)) / 100) # calculation required for 1.2% increase
+initial_allowed_money_to_bot = 100 # bot_money (after debug)
+selling_worth_rupees = bot_money + ((bot_money * (percent_increase)) / 100) # calculation required for 1.4% increase
 #highest bidding ka percent diff with low is selling...
-
-# Start from buying or selling: 
-flag = 0 # 0: to start from buying order | 1: to start from selling order
 
 # 0.2 % of each trade for paying as brokerage money to exchange:
 brokerage_amt = 0
@@ -137,28 +136,40 @@ def buy():
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  SELL AREA ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 def SellCRYPTO():
+    global selling_worth_rupees
     global safe_high_BID
     global bot_money
     global total_profit
     global brokerage_amt
     print("\nExecuting Selling Order ...\n")
-    # sell()
+    sell()
     print("######################    ⬆   " + cryptoname + " Value Rose Above High Margin   ⬆    ######################")
-    print("********************** | Selling " + cryptoname + " worth of Rs." + str(selling_coins_worth_rupees) + " - Checkout done | **********************" + '\n')
+    print("********************** | Selling " + cryptoname + " worth of Rs." + str(selling_worth_rupees) + " - Checkout done | **********************" + '\n')
     # print("Updated High Margin Value : " + str(safe_high_BID) + " " + cryptoname)
 
     bot_money = initial_allowed_money_to_bot # now its time to buy, lessgoo!
     # total_profit += ((bot_money * (percent_increase)) / 100) - ((bot_money * 0.2) / 100)
-    brokerage_amt += ((selling_coins_worth_rupees * 0.2) / 100)
-    total_profit += selling_coins_worth_rupees - bot_money - brokerage_amt
+    brokerage_amt += ((selling_worth_rupees * 0.2) / 100)
+    total_profit += selling_worth_rupees - bot_money - brokerage_amt
     # safe_high_BID += elevation_amount
 
-def sell():
-    print()
-    # driver.find_element(By.XPATH, "//button[normalize-space()='SELL USDT']").click() # checking out ...
-    # driver.find_element(By.XPATH, "//input[@id='mat-input-2']").send_keys(selling_coins_worth_rupees) # filling order value ...
-    # driver.find_element(By.XPATH, "//button[normalize-space()='Cancel']").click() # cancelling ...
-
+def sell(): #Specifically fot Bitcoin
+    global selling_worth_rupees
+    selling_worth_rupees = (selling_worth_rupees) - ((selling_worth_rupees * 0.1) / 100)
+    
+    #1. clicking on sell btc button
+    driver.find_element(By.XPATH, "//button[@class='cta cta--red']").click()
+    
+    #2. selecting market as check option
+    # driver.find_element(By.XPATH, "//label[@for='mat-radio-13-input']//span[@class='mat-radio-label-content']").click() failes
+    # driver.find_element(By.XPATH, "//label[@for='mat-radio-13-input']//span[@class='mat-radio-inner-circle']").click() # 1
+    # driver.find_element(By.XPATH, "//label[@for='mat-radio-18-input']//span[@class='mat-radio-container']").click() # 2
+    
+    #3. filling values by sending key in INR as selling worth rupees
+    driver.find_element(By.CLASS_NAME, "mat-input-element mat-form-field-autofill-control ng-tns-c82-12 ng-pristine ng-invalid cdk-text-field-autofill-monitored ng-touched").send_keys("1500") # selling_worth_rupees
+    
+    #4. Clicking on submit
+    driver.find_element(By.XPATH, "//button[@type='submit']").click()
 
 
 
@@ -191,11 +202,11 @@ def COMPARISION(): # resolve between comparator of curr value and safe value poi
     print("```````````````````````````````````````````````````````````")
     print("| Profit So Far: " + str(total_profit))
     print(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,")
+    print("In Hand Bot Money: " + str(bot_money))
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DEBUGGER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#login()
-
+login()
 
 # Debug Running time with errors:
 while True:
