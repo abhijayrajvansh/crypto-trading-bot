@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options #to by-pass chrome broswer notification
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.alert import Alert
 import os
 import datetime
 import time
@@ -64,9 +65,9 @@ total_profit = 0
 
 # Sensitive end points to observer fluctuatios: RESET at 00.00 and 100.00
 print()
-# safe_low_BID = 80.00
-safe_low_BID = input("Enter Low BID Value : ")
-safe_low_BID = float(safe_low_BID)
+safe_low_BID = 80.00
+# safe_low_BID = input("Enter Low BID Value : ")
+# safe_low_BID = float(safe_low_BID)
 
 safe_high_BID = safe_low_BID + ((safe_low_BID * 1.5) / 100) # Automatic High BID will be set to 1.5% increase (0.2 & 0.2 brokerage_amount)
 print("High BID Margin Set To : " + str(safe_high_BID) + " At 1.4% increase")
@@ -194,13 +195,25 @@ def COMPARISION(): # resolve between comparator of curr value and safe value poi
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DEBUGGER ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-login()
+# login()
 
-money = driver = driver.find_element(By.XPATH, "//div[@class='table__body ng-star-inserted']//div[2]//div[1]").text
-print(money)
-print()
-print("printing the 5th index : money[4]")
-print(money[4])
+# driver.find_element(By.XPATH, "//button[@class='cta cta--red']").click()
+# time.sleep(3)
+
+# text = driver.find_element(By.Cryptocurrency-Price-Bot , "cdk-drag d-buy-sell-bottomsheet-everything c-buy-sell-bottomsheet")
+
+# driver.find_element(By.XPATH, "//input[@id='mat-input-7']").send_keys(6969)
+
+# driver.find_element(By.XPATH, "//input[@id='mat-input-1']").send_keys(123)
+# assert "DragnDrop" in driver.title
+
+
+
+
+
+# driver.find_element(By.XPATH, '//*[@id="mat-radio-8"]/label/span[1]/span[1]').click()
+
+
 
 # Debug Running time with errors:
 # while True:
