@@ -35,8 +35,8 @@ time.sleep(5) # very important everything to load before exicuting commands // s
 
 def login():
     driver.find_element(By.XPATH, "//span[normalize-space()='Login']").click()
-    driver.find_element(By.XPATH, "//input[@id='mat-input-4']").send_keys("abhijayrajvansh01@gmail.com")
-    driver.find_element(By.XPATH, "//input[@id='mat-input-5']").send_keys("@BJ@crypto!2711")
+    driver.find_element(By.XPATH, "//input[@id='mat-input-4']").send_keys("")
+    driver.find_element(By.XPATH, "//input[@id='mat-input-5']").send_keys("")
     driver.find_element(By.XPATH, "//button[@type='submit']").click()
     time.sleep(40)
     print("``````````````````````````````````````````")

@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options #to by-pass chrome broswer notification
 from selenium.webdriver.common.by import By
+
 import os
 import datetime
 import time
@@ -33,9 +34,11 @@ time.sleep(5) # very important everything to load before exicuting commands // s
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ LOGIN ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 def login():
+    global ID
+    global ps
     driver.find_element(By.XPATH, "//span[normalize-space()='Login']").click()
-    driver.find_element(By.XPATH, "//input[@id='mat-input-4']").send_keys("abhijayrajvansh01@gmail.com")
-    driver.find_element(By.XPATH, "//input[@id='mat-input-5']").send_keys("@BJ@crypto!2711")
+    driver.find_element(By.XPATH, "//input[@id='mat-input-4']").send_keys() #enter values
+    driver.find_element(By.XPATH, "//input[@id='mat-input-5']").send_keys() #enter values
     driver.find_element(By.XPATH, "//button[@type='submit']").click()
     time.sleep(60)
     print("``````````````````````````````````````````")
