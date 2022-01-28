@@ -17,7 +17,11 @@ echo -e "${Orange}@@@@@*******************************@@@@${NC}                 
 echo -e "${Orange}@@@@@@@***************************@@@@@@${NC}"
 echo -e "${Orange}@@@@@@@@@@@*******************@@@@@@@@@@${NC}        Contact Developer : abhijayrajvansh01@gmail.com"
 echo " "
-
-read -n 1 -r -s -p $'Press Enter To Continue...'
-
-cd && cd desktop && cd Cryptocurrency-Price-Bot && python3 app.py
+echo "-----------------------------------------------------------------------------------------------------"
+sleep 1
+echo "Running Files..."
+alias python='python3'
+python --version
+sleep 2
+echo "Ready To Log In!!!"
+python app.py
