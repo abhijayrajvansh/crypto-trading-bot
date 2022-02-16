@@ -1,5 +1,6 @@
-# Cryptocurrency-Price-Bot
+# Cryptocurrency-Price-Bot !
 
+© 2022 Abhijay Rajvansh, All rights reserved.
 
 *structuring data table*
 
@@ -11,3 +12,5 @@ Low BID Margin : 3040838.4 | High BID Margin : 3083410.1376
 ```````````````````````````````````````````````````````````
 | Profit So Far: 0
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+- Currently this bot idea is disposed as the exchange is not much handy in desktop version!
