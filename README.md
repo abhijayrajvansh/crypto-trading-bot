@@ -1,4 +1,4 @@
-# Cryptocurrency-Price-Bot !
+# Crypto-Trading-Bot-[Archived]
 
 © 2022 Abhijay Rajvansh, All rights reserved.
 
