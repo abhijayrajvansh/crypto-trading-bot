@@ -1,4 +1,4 @@
-# Crypto-Trading-Bot-[Archived]
+# Crypto Trading Bot v0 [Archived]
 
 © 2022 Abhijay Rajvansh, All rights reserved.
 
