@@ -14,4 +14,4 @@ Low BID Margin : 3040838.4 | High BID Margin : 3083410.1376
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
 - Currently this bot idea is archived because scrapping of data using selenium does not fit.
-- Preferred using API and scrapping without some GUI driver like selenium.
+- Preferred using API and scraping without some GUI driver like selenium.
