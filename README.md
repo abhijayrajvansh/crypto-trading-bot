@@ -1,6 +1,6 @@
-# Crypto Trading Bot v0 [Archived]
+# Crypto Trading Bot
 
-© 2022 Abhijay Rajvansh, All rights reserved.
+© 2022 [Abhijay Rajvansh](https://www.abhijayrajvansh.com/), All rights reserved.
 
 *structuring data table*
 
@@ -13,5 +13,4 @@ Low BID Margin : 3040838.4 | High BID Margin : 3083410.1376
 | Profit So Far: 0
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
-- Currently this bot idea is archived because scrapping of data using selenium does not fit.
-- Preferred using API and scraping without some GUI driver like selenium.
+- Currently this bot is archived because scrapping isn't efficient here.
